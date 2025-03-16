@@ -30,7 +30,7 @@ pickle.dump(encoder, open('labelencoder.pkl', 'wb'))
 ros = RandomOverSampler(random_state=42)             # setting random state to ensure reproducibility
 X_resampled, y_resampled = ros.fit_resample(X, y)    # applying oversampling
 
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42) 
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)  
 
 results = {}
 
@@ -124,7 +124,7 @@ xgb(X_train, X_test, y_train, y_test)
 rf(X_train, X_test, y_train, y_test)
 
 # Create a DataFrame from the results dictionary
-results_df = pd.DataFrame(results).T  # Transpose the dictionary to make each model a row
+results_df = pd.DataFrame(results).T  
 
 # Display the comparison table
 print(results_df)

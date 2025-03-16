@@ -28,7 +28,7 @@ import xgboost
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 
-from prepro import preprocess, mow, get_directory, summary_visualization, extract_text_from_pdf, extract_text_word
+from prepro import preprocess, mow, get_directory, summary_visualization, extract_text_word
 
 folder_path = get_directory()  #Input
 
@@ -67,22 +67,22 @@ def main(folder_path):
                                 contains_images = True
                                 break
                     
-                    if text.strip():  # If there's any text content
-                        preprocessed_text = preprocess(text)
-                        top_words=mow(preprocessed_text)
-                        first_five_words = [word for word, _ in top_words[:5]]  # returns a list of the first five words
-                        result = ' '.join(preprocessed_text)
-                        w5 = ', '.join(first_five_words)
-                        et_data.append({'Extracted content': result, 'Label':folder_name, 'Most Occuring word': w5})
-                        # Update stats
-                        num_words = len(preprocessed_text)
-                        total_files += 1
-                        total_words += num_words
-                        pages = len(reader.pages)
-                        folder_stats[folder_name]['file_count'] += 1
-                        folder_stats[folder_name]['word_count'] += num_words
-                        folder_stats[folder_name]['page_count'] += pages
-                        #data_vis(top_words)
+                if text.strip():  # If there's any text content
+                    preprocessed_text = preprocess(text)
+                    top_words=mow(preprocessed_text)
+                    first_five_words = [word for word, _ in top_words[:5]]  # returns a list of the first five words
+                    result = ' '.join(preprocessed_text)
+                    w5 = ', '.join(first_five_words)
+                    et_data.append({'Extracted content': result, 'Label':folder_name, 'Most Occuring word': w5})
+                    # Update stats
+                    num_words = len(preprocessed_text)
+                    total_files += 1
+                    total_words += num_words
+                    pages = len(reader.pages)
+                    folder_stats[folder_name]['file_count'] += 1
+                    folder_stats[folder_name]['word_count'] += num_words
+                    folder_stats[folder_name]['page_count'] += pages
+                    #data_vis(top_words)
         df=pd.DataFrame(et_data)
         df.to_excel("example_pandas.xlsx", index=False)
     
